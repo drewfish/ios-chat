@@ -26,8 +26,7 @@ class LoginViewController: UIViewController {
         PFUser.logInWithUsernameInBackground(emailField.text, password: passwordField.text) {
             (user: PFUser?, error: NSError?) -> Void in
             if error == nil {
-                // TODO
-                println(user)
+                self.performSegueWithIdentifier("openChat", sender: self)
             } else {
                 println(error)
             }
@@ -43,7 +42,7 @@ class LoginViewController: UIViewController {
         user.signUpInBackgroundWithBlock() {
             (succeeded: Bool, error: NSError?) -> Void in
             if error == nil {
-                // TODO
+                self.performSegueWithIdentifier("openChat", sender: self)
             } else {
                 println(error)
             }
