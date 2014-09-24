@@ -50,7 +50,7 @@
                     <connections>
                         <outlet property="emailField" destination="hUR-AB-NTg" id="6Dz-oF-8Zi"/>
                         <outlet property="passwordField" destination="CrE-mu-HAX" id="17Y-Wy-cF5"/>
-                        <segue destination="VM7-0c-W5F" kind="modal" identifier="openChat" modalTransitionStyle="partialCurl" id="Tzd-jM-Pbj"/>
+                        <segue destination="VM7-0c-W5F" kind="modal" identifier="openChat" id="Tzd-jM-Pbj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -83,11 +83,16 @@
                                     <action selector="onSend:" destination="VM7-0c-W5F" eventType="touchUpInside" id="37b-Cl-CnQ"/>
                                 </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="hhL-Hi-dH9">
+                                <rect key="frame" x="16" y="132" width="288" height="416"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="messageField" destination="mqB-7P-CXa" id="FCf-gB-lv1"/>
+                        <outlet property="messageList" destination="hhL-Hi-dH9" id="ATC-EF-c9V"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xtx-P6-oqr" userLabel="First Responder" sceneMemberID="firstResponder"/>

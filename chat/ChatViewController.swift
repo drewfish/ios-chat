@@ -8,14 +8,20 @@
 
 import UIKit
 
-class ChatViewController: UIViewController, UITextFieldDelegate {
+class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+
     @IBOutlet weak var messageField: UITextField!
+    @IBOutlet var messageList: UITableView!
+
+    var messages: [String] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        messageField.delegate = self
 
-        // Do any additional setup after loading the view.
+        messageList.delegate = self
+        messageList.dataSource = self
+
+        NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: "onTimer", userInfo: nil, repeats: true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,22 +37,38 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
             (block: Bool?, error: NSError?) in
             if error == nil {
                 println("-- message successfully submitted")
-            }
-            else {
+            } else {
                 println("-- message FAILED to submitted")
             }
         }
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return messages.count
     }
-    */
 
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell = UITableViewCell()
+        cell.textLabel?.text = messages[indexPath.row]
+        return cell
+    }
+
+    func onTimer() {
+        var query = PFQuery(className: "Message")
+        query.orderByDescending("createdAt")
+        query.findObjectsInBackgroundWithBlock() {
+            (objects: [AnyObject]!, error: NSError?) -> Void in
+            if error == nil {
+                self.messages = []
+                for object in objects {
+                    var message = object as PFObject
+                    var s = message["text"] as String
+                    self.messages.append(s)
+                }
+                self.messageList.reloadData()
+            } else {
+                println(error)
+            }
+        }
+    }
 }
